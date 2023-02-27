@@ -3,7 +3,15 @@ version: "3.7"
 # Mendefinisikan dua layanan
 services:
 
-  # Layanan pertama: item-app
+  # Layanan pertama: item-db
+  item-db:
+    # Menggunakan image resmi dari MongoDB versi 3
+    image: mongo:3
+    # Menggunakan volume bernama "app-db" untuk menyimpan data MongoDB
+    volumes:
+      - "app-db:/data/db"
+
+  # Layanan kedua: item-app
   item-app:
     # Menggunakan image yang sudah diunggah ke GitHub Packages
     image: ghcr.io/matthewcalbert/a433-microservices/item-app:v1
@@ -12,14 +20,8 @@ services:
       - "80:8080"
     # Mengatur kebijakan restart layanan menjadi "always"
     restart: always
-
-  # Layanan kedua: item-db
-  item-db:
-    # Menggunakan image resmi dari MongoDB versi 3
-    image: mongo:3
-    # Menggunakan volume bernama "app-db" untuk menyimpan data MongoDB
-    volumes:
-      - "app-db:/data/db"
+    depends_on: 
+      - item-db
 
 # Mendefinisikan volume "app-db" yang digunakan oleh layanan "item-db"
 volumes:
