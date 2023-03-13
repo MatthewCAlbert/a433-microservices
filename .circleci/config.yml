@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Hadolint
+          name: "Install Hadolint"
           command: |
             apk add --no-cache curl
             curl -sSL -o hadolint "https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64"
@@ -23,7 +23,7 @@ jobs:
             hadolint Dockerfile
 
   test-app:
-    name: Test App
+    name: "Test App"
     docker:
       - image: golang:1.15
     steps:
@@ -34,7 +34,7 @@ jobs:
             go test -v -short --count=1 $(go list ./...)
 
   build-app-karsajobs:
-    name: Build App KarsaJobs
+    name: "Build App KarsaJobs"
     docker:
       - image: docker:stable
     steps:
