@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   go: circleci/go@1.7.2
+  docker: circleci/docker@1.5.0
 
 jobs:
   lint-dockerfile:
@@ -33,10 +34,11 @@ jobs:
             go test -v -short --count=1 $(go list ./...)
 
   build-app-karsajobs:
-    docker:
-      - image: docker:stable
+    executor: 
+      name: docker/default
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Login to GitHub Packages
           command: |
