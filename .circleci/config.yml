@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  go: circleci/go@1.0.2
+  go: circleci/go@1.7.2
 
 jobs:
   lint-dockerfile:
@@ -22,8 +22,9 @@ jobs:
             hadolint Dockerfile
 
   test-app:
-    docker:
-      - image: golang:1.15
+    executor:
+      name: go/default
+      tag: "1.15"
     steps:
       - checkout
       - run:
